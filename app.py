@@ -24,7 +24,7 @@ def create_tables():
     return 'Database tables created successfully!'
 
 @app.route('/', methods=['GET', 'POST'])
-def hello_world():
+def my_todo_list():
     if request.method=='POST':
          title = request.form['title']
          desc = request.form['desc']
@@ -57,11 +57,9 @@ def delete(sno):
     todo = Todo.query.filter_by(sno=sno).first()
     db.session.delete(todo)
     db.session.commit()
-
     return redirect("/")
 
 
 
 if __name__ == "__main__":
-
-    app.run(debug=True, port=5000)
+   app.run(debug=True, port=5000)
