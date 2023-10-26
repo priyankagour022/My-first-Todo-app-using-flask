@@ -5,7 +5,7 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+#SQLAlchemy is used to create the database
 db = SQLAlchemy(app)
 
 class Todo(db.Model):
@@ -22,7 +22,7 @@ def create_tables():
     with app.app_context():
         db.create_all()
     return 'Database tables created successfully!'
-
+#send get or post request to the server and again get back to the home page
 @app.route('/', methods=['GET', 'POST'])
 def my_todo_list():
     if request.method=='POST':
@@ -33,7 +33,7 @@ def my_todo_list():
          db.session.commit()
     allTodo = Todo.query.all()
     return render_template('index.html', allTodo=allTodo)
-
+#Endpoit for update the row 
 @app.route('/update/<int:sno>', methods=['GET','POST'])
 def update(sno):
      
@@ -49,9 +49,7 @@ def update(sno):
          return redirect("/")
     todo = Todo.query.filter_by(sno=sno).first()
     return render_template('update.html', todo=todo)
-
-   
-
+#endpoint for delete the row---
 @app.route('/delete/<int:sno>')
 def delete(sno):
     todo = Todo.query.filter_by(sno=sno).first()
